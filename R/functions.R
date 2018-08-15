@@ -1014,7 +1014,7 @@ scde.fit.models.to.reference <- function(counts, reference, n.cores = 10, zero.c
     if(save.plots) {
         # model fits
         #CairoPNG(file = paste(group, "model.fits.png", sep = "."), width = 1024, height = 300*length(ids))
-        pdf(file = plot.filename, width = 13, height = 4)
+        #pdf(file = plot.filename, width = 13, height = 4)
         #l <- layout(matrix(seq(1, 4*length(ids)), nrow = length(ids), byrow = TRUE), rep(c(1, 1, 1, 0.5), length(ids)), rep(1, 4*length(ids)), FALSE)
         l <- layout(matrix(seq(1, 4), nrow = 1, byrow = TRUE), rep(c(1, 1, 1, 0.5), 1), rep(1, 4), FALSE)
         par(mar = c(3.5, 3.5, 3.5, 0.5), mgp = c(2.0, 0.65, 0), cex = 0.9)
@@ -3122,9 +3122,9 @@ calculate.crossfit.models <- function(counts, groups, min.count.threshold = 4, n
                 }
             }
             #pdf(file = paste(group, "crossfits.pdf", sep = "."), width = 3*length(ids), height = 3*length(ids))
-            CairoPNG(filename = paste(group, "crossfits.png", sep = "."), width = 250*length(ids), height = 250*length(ids))
-            pairs.extended(log10(counts[, ids]+1), lower.panel = t.pairs.smoothScatter.spearman, upper.panel = t.panel.component.scatter, diag.panel = t.pairs.panel.hist, cex = 1.5)
-            dev.off()
+            #CairoPNG(filename = paste(group, "crossfits.png", sep = "."), width = 250*length(ids), height = 250*length(ids))
+            #pairs.extended(log10(counts[, ids]+1), lower.panel = t.pairs.smoothScatter.spearman, upper.panel = t.panel.component.scatter, diag.panel = t.pairs.panel.hist, cex = 1.5)
+            #dev.off()
         })
     }
 
@@ -3379,7 +3379,7 @@ calculate.individual.models <- function(counts, groups, cfm, nrep = 1, verbose =
         if(save.plots && length(ml)>0) {
             # model fits
             #CairoPNG(filename = paste(group, "model.fits.png", sep = "."), width = 1024, height = 300*length(ids))
-            pdf(file = paste(group, "model.fits.pdf", sep = "."), width = ifelse(linear.fit, 15, 13), height = 4)
+            #pdf(file = paste(group, "model.fits.pdf", sep = "."), width = ifelse(linear.fit, 15, 13), height = 4)
             #l <- layout(matrix(seq(1, 4*length(ids)), nrow = length(ids), byrow = TRUE), rep(c(1, 1, 1, 0.5), length(ids)), rep(1, 4*length(ids)), FALSE)
             l <- layout(matrix(seq(1, 4), nrow = 1, byrow = TRUE), rep(c(1, 1, 1, ifelse(linear.fit, 1, 0.5)), 1), rep(1, 4), FALSE)
             par(mar = c(3.5, 3.5, 3.5, 0.5), mgp = c(2.0, 0.65, 0), cex = 0.9)
@@ -3665,11 +3665,11 @@ fit.nb2gth.mixture.model <- function(rdf, zero.count.threshold = 10, prior = as.
 # m1 - fitted model
 plot.nb2.mixture.fit <- function(m1, rdf, en, do.par = TRUE, n.zero.windows = 50, compressed.models = FALSE, bandwidth = 0.05) {
     #require(Cairo) require(RColorBrewer)
-    if(do.par) {
-        CairoPNG(filename = paste(en, "model.fit.png", sep = "."), width = 800, height = 300)
-        l <- layout(matrix(c(1:4), 1, 4, byrow = TRUE), c(1, 1, 1, 0.5), rep(1, 4), FALSE)
-        par(mar = c(3.5, 3.5, 3.5, 0.5), mgp = c(2.0, 0.65, 0), cex = 0.9)
-    }
+    #if(do.par) {
+    #    #CairoPNG(filename = paste(en, "model.fit.png", sep = "."), width = 800, height = 300)
+    #    l <- layout(matrix(c(1:4), 1, 4, byrow = TRUE), c(1, 1, 1, 0.5), rep(1, 4), FALSE)
+    #    par(mar = c(3.5, 3.5, 3.5, 0.5), mgp = c(2.0, 0.65, 0), cex = 0.9)
+    #}
     smoothScatter(log10(rdf$fpm+1), log10(rdf$count+1), xlab = "expected FPM", ylab = "observed counts", main = paste(en, "scatter", sep = " : "), bandwidth = bandwidth)
 
     plot(c(), c(), xlim = range(log10(rdf$fpm+1)), ylim = range(log10(rdf$count+1)), xlab = "expected FPM", ylab = "observed counts", main = paste(en, "components", sep = " : "))
@@ -5583,9 +5583,9 @@ ViewDiff <- setRefClass(
 
                        t <- tempfile()
                        #require(Cairo)
-                       CairoPNG(filename = t, width = 350, height = 560)
+                       #CairoPNG(filename = t, width = 350, height = 560)
                        scde.test.gene.expression.difference(gene = gene, models = models, counts = counts, groups = groups, prior = prior, batch = batch, ratio.range = c(-10, 10), show.individual.posteriors = show.individual.posteriors, verbose = FALSE)
-                       dev.off()
+                       #dev.off()
                        res$header('Content-type', 'image/png')
                        res$body <- t
                        names(res$body) <- 'file'
@@ -5601,7 +5601,7 @@ ViewDiff <- setRefClass(
                        df <- df[, unlist(tapply(seq_len(ncol(df)), groups, I))]
                        cell.col <- rep(c("#E9A994", "#66CCFF"), as.integer(table(groups)))
 
-                       render.row <- function(nam, val, col) {
+                       
                            paste("<tr > ", "<th > ", nam, "</th > ", paste("<td bgcolor = ", col, " > ", val, "</td > ", sep = "", collapse = " "), "</tr > ", sep = "")
                        }
 
