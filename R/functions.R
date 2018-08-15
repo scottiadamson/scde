@@ -5576,20 +5576,20 @@ ViewDiff <- setRefClass(
 
                    },
                    # POSTERIOR PLOT
-                   '/posterior.png' = {
-                       gene <- ifelse(is.null(req$params()$gene), sample(gt$gene), req$params()$gene)
-                       bootstrap <- ifelse(is.null(req$params()$bootstrap), TRUE, req$params()$bootstrap == "T")
-                       show.individual.posteriors <- ifelse(is.null(req$params()$show.individual.posteriors), TRUE, req$params()$show.individual.posteriors == "true")
+                   #'/posterior.png' = {
+                   #    gene <- ifelse(is.null(req$params()$gene), sample(gt$gene), req$params()$gene)
+                   #    bootstrap <- ifelse(is.null(req$params()$bootstrap), TRUE, req$params()$bootstrap == "T")
+                   #    show.individual.posteriors <- ifelse(is.null(req$params()$show.individual.posteriors), TRUE, req$params()$show.individual.posteriors == "true")
 
-                       t <- tempfile()
-                       #require(Cairo)
-                       #CairoPNG(filename = t, width = 350, height = 560)
-                       scde.test.gene.expression.difference(gene = gene, models = models, counts = counts, groups = groups, prior = prior, batch = batch, ratio.range = c(-10, 10), show.individual.posteriors = show.individual.posteriors, verbose = FALSE)
-                       #dev.off()
-                       res$header('Content-type', 'image/png')
-                       res$body <- t
-                       names(res$body) <- 'file'
-                   },
+                   #    t <- tempfile()
+                   #    #require(Cairo)
+                   #    #CairoPNG(filename = t, width = 350, height = 560)
+                   #    scde.test.gene.expression.difference(gene = gene, models = models, counts = counts, groups = groups, prior = prior, batch = batch, ratio.range = c(-10, 10), show.individual.posteriors = show.individual.posteriors, verbose = FALSE)
+                   #    #dev.off()
+                   #    res$header('Content-type', 'image/png')
+                   #    res$body <- t
+                   #    names(res$body) <- 'file'
+                   #},
                    # GENE EXPRESSION LEVELS
                    '/elevels.html' = {
                        geneName <- ifelse(is.null(req$params()$geneName), gt$gene[[1]], req$params()$geneName)
@@ -5601,7 +5601,7 @@ ViewDiff <- setRefClass(
                        df <- df[, unlist(tapply(seq_len(ncol(df)), groups, I))]
                        cell.col <- rep(c("#E9A994", "#66CCFF"), as.integer(table(groups)))
 
-                       
+                       render.row <- function(nam, val, col) {
                            paste("<tr > ", "<th > ", nam, "</th > ", paste("<td bgcolor = ", col, " > ", val, "</td > ", sep = "", collapse = " "), "</tr > ", sep = "")
                        }
 
